@@ -19,7 +19,7 @@ client = genai.Client(api_key=os.getenv("LLM_GEMINI"))
 GEMINI_MODELS = [
     m.strip()
     for m in os.getenv(
-        "GEMINI_MODELS", "gemini-2.5-flash-lite,gemini-2.0-flash"
+        "GEMINI_MODELS", "gemini-3.5-flash-lite,gemini-3.5-flash"
     ).split(",")
     if m.strip()
 ]
