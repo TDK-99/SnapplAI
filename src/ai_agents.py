@@ -1,5 +1,4 @@
 import pandas as pd
-from schedule import jobs
 from pypdf import PdfReader
 from dotenv import load_dotenv
 import os
@@ -9,10 +8,21 @@ from google.genai import types
 import time
 
 from src.pydantic import JobSummary, JobScore
+from src.llm import generate_content_resilient
 
 load_dotenv(".env")
 load_dotenv("your_cv_config/file_config.env")
 client = genai.Client(api_key=os.getenv("LLM_GEMINI"))
+
+# Ordered list of models to try; the pipeline falls back down the list when a
+# model is overloaded (503) or rate-limited (429).
+GEMINI_MODELS = [
+    m.strip()
+    for m in os.getenv(
+        "GEMINI_MODELS", "gemini-2.5-flash-lite,gemini-2.0-flash"
+    ).split(",")
+    if m.strip()
+]
 
 
 def agentic_summarize(jobs): # summirize the description and create an output of dettail of the job descriprion
@@ -38,15 +48,16 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
 
     for index, row in jobs.iterrows():
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
+        response = generate_content_resilient(
+            client,
             contents=f"{row['description']}",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
-                response_mime_type="application/json", 
+                response_mime_type="application/json",
                 response_schema=JobSummary # forza output JSON
-            )
+            ),
+            models=GEMINI_MODELS,
         )
         jobs.at[index, "summary"] = response.text
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
@@ -113,16 +124,17 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 {{"analysis": "...", "score": "...","a_summirize": "..."  , "company": "...", "role": "...", "work_mode": "...", "apply_link": "..."}}"""
     response_list= []
     for index, row in jobs.iterrows():
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
-            contents=f"""{row["title"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]}, 
+        response = generate_content_resilient(
+            client,
+            contents=f"""{row["title"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
                         {row["required_skills"]}, {row["nice_to_have_skills"]}, {row["required_education"]}, {row["languages"]},{row["job_url"]}""",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
                 response_mime_type="application/json",
                 response_schema=JobScore  # forza output JSON
-            )
+            ),
+            models=GEMINI_MODELS,
         )
         response_list.append(response.text)
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
@@ -134,9 +146,6 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     jobs_score = pd.json_normalize(parsed)
 
     # filter df with env score
-    
-    print(jobs_score.columns.tolist(), flush=True)
-    print(jobs_score.head(2).to_string(), flush=True)
 
     jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
 
