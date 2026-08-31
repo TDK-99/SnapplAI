@@ -21,17 +21,6 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
     system_prompt= """ 
     Extract structured data from a job posting. Return ONLY valid JSON, no markdown, no text.
-
-    {
-    "title": "exact job title", 
-    "seniority": "intern|junior|mid|senior|lead|manager|director",
-    "modality": "remote|hybrid|on-site",
-    "experience_years_min": number or null,
-    "required_skills": ["explicitly required tools/languages/platforms"],
-    "nice_to_have_skills": ["preferred/bonus skills"],
-    "required_education": "degree/certification or null",
-    "languages": ["required spoken languages with level"]
-
     If not in the posting, use null. Do not invent. Keep original language for title and responsibilities. Ignore benefits, perks, company values."""
     
     load_dotenv(".env")
@@ -115,7 +104,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     for index, row in jobs.iterrows():
         response = client.models.generate_content(
             model="gemini-3.5-flash-lite",
-            contents=f"""{row["title"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]}, 
+            contents=f"""{row["role"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]}, 
                         {row["required_skills"]}, {row["nice_to_have_skills"]}, {row["required_education"]}, {row["languages"]},{row["job_url"]}""",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
