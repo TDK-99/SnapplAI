@@ -1,4 +1,3 @@
 LLM_GEMINI= # add your api key on google ai studio
-GEMINI_MODELS= # optional, comma-separated fallback list (default: gemini-3.5-flash-lite,gemini-3.5-flash)
 GMAIL_APP_PASSWORD= # app password in the google account 2 factor section (remove space on it)
 GMAIL_USER= # your gmail mail

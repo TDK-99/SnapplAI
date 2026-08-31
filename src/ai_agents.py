@@ -14,16 +14,6 @@ load_dotenv(".env")
 load_dotenv("your_cv_config/file_config.env")
 client = genai.Client(api_key=os.getenv("LLM_GEMINI"))
 
-# Ordered list of models to try; the pipeline falls back down the list when a
-# model is overloaded (503) or rate-limited (429).
-GEMINI_MODELS = [
-    m.strip()
-    for m in os.getenv(
-        "GEMINI_MODELS", "gemini-3.5-flash-lite,gemini-3.5-flash"
-    ).split(",")
-    if m.strip()
-]
-
 
 def agentic_summarize(jobs): # summirize the description and create an output of dettail of the job descriprion
     
@@ -57,7 +47,6 @@ def agentic_summarize(jobs): # summirize the description and create an output of
                 response_mime_type="application/json",
                 response_schema=JobSummary # forza output JSON
             ),
-            models=GEMINI_MODELS,
         )
         jobs.at[index, "summary"] = response.text
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
@@ -134,7 +123,6 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 response_mime_type="application/json",
                 response_schema=JobScore  # forza output JSON
             ),
-            models=GEMINI_MODELS,
         )
         response_list.append(response.text)
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
