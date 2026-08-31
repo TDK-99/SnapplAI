@@ -4,10 +4,10 @@ site_name= "linkedin"
 
 search_term= "Data Analyst"
 
-location= "UK" check the list
+location= "UK" #check the list #for multi country write like this "italy,UK"
 
-results_wanted= 20 #max 50 if  only hybrid/remote max 25 if also on site
-
+results_wanted= 20 # Max 100 results per run. For multiple countries, split evenly:
+                   # e.g. 3 countries → ~33 each (100 / 3)
 hours_old= 2 # when it post
 
 linkedin_fetch_description= True # this should be always true

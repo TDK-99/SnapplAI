@@ -120,7 +120,8 @@ SnapplAI/
 ├── src/
 │   ├── daily_scraper.py    # LinkedIn scraping with python-jobspy
 │   ├── ai_agents.py        # Gemini calls: summarize + analyze
-│   └── smtp.py             # Email builder and SMTP sender
+│   ├── smtp.py             # Email builder and SMTP sender
+│   └── pydantic.py         # pydantic class for force ai output
 ├── your_cv_config/
 │   ├── .gitkeep            # Keeps folder tracked in git
 │   ├── file_config.env     # Your settings (role, location, filters)
