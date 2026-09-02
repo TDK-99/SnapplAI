@@ -4,6 +4,7 @@ from pydantic import Field
 from typing import Optional
 
 class JobSummary(BaseModel):
+    city: str  = Field(description="the city")
     role: str = Field(description="Job title")
     seniority: str = Field(description="Seniority level: intern|junior|mid|senior|lead|manager|director")
     modality: str = Field(description="Work modality: remote|hybrid|on-site")
