@@ -21,7 +21,9 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
     system_prompt= """ 
     Extract structured data from a job posting. Return ONLY valid JSON, no markdown, no text.
-    If not in the posting, use null. Do not invent. Keep original language for title and responsibilities. Ignore benefits, perks, company values."""
+    If not in the posting, use null. Do not invent. Keep original language for title and responsibilities. Ignore benefits, perks, company values.
+    Few note:
+    for the role dont invent take fromt {row["title"]} and for location always write in english so if you find Roma put Rome"""
     
     load_dotenv(".env")
 
