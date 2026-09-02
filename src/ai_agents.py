@@ -114,8 +114,8 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 - "location": country of the job
                 - "city": city of the job 
                 - "a_summirize": alternate summary of the analysis max 100 chars.
-                - "company": extract from the job description
-                - "role": exact job title from the description
+                - "company": the company
+                - "role": exact job title 
                 - "work_mode": one of "remote", "hybrid", "onsite", "unknown" — extract from description
                 - "apply_link": the original LinkedIn URL (https://www.linkedin.com/jobs/view/...), copy it exactly, never modify it
 
