@@ -140,6 +140,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
     jobs_score = pd.json_normalize(parsed)
 
+
     # filter df with env score
     
     job_all= jobs_score
@@ -148,7 +149,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
     # df to dict
 
-    jobs_score = jobs_score[["score","company","role","work_mode","a_summirize","apply_link"]]
+    jobs_score = jobs_score[["score","location","city","company","role","work_mode","a_summirize","apply_link"]]
 
     jobs_score = jobs_score.to_dict(orient="records")
 
