@@ -22,7 +22,7 @@ env:
 
   location: "Italy,UK,Spain" #check the list on file_config.txt #for multi country write like this "italy,UK"
 
-  city: ""           #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
+  city: "Rome"           #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
   
   results_wanted: "33" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
