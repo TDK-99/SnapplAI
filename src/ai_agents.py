@@ -111,6 +111,8 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 ## Output rules
                 - "analysis": concise reasoning covering key match/mismatch criteria.
                 - "score": integer 1-10, based on your analysis above
+                - "location": country of the job
+                - "city": city of the job 
                 - "a_summirize": alternate summary of the analysis max 100 chars.
                 - "company": extract from the job description
                 - "role": exact job title from the description
