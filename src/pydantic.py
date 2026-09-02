@@ -19,6 +19,8 @@ class JobSummary(BaseModel):
 class JobScore(BaseModel):
     analysis: str
     score: int
+    location: str
+    city: str
     a_summirize: str
     company: str
     role: str
