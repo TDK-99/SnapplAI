@@ -156,7 +156,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     #clean the dict output
 
     jobs_score = json.dumps(jobs_score, indent=1)
-    jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '')
+    jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
 
     
     return jobs_score, job_all
