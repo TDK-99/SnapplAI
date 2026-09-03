@@ -27,6 +27,7 @@ def main():
     jobs= job_scraper()
     
     print("Number of jobs found:", jobs["id"].count())
+    print(jobs[["location"]].nunique, flush=True)
 
     jobs= agentic_summarize(jobs)
 
