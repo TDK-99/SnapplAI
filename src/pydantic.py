@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from pydantic import Field
 
-from typing import Optional
+from typing import Optional, Literal
 
 class JobSummary(BaseModel):
     city: str  = Field(description="the city")
@@ -17,14 +17,14 @@ class JobSummary(BaseModel):
 
 
 class JobScore(BaseModel):
-    analysis: str
-    score: int
-    location: str
-    city: str
-    a_summirize: str
-    company: str
-    role: str
-    work_mode: str
-    apply_link: str
+    analysis: str = Field(description="Concise reasoning covering key match/mismatch criteria")
+    score: int = Field(ge=1, le=10, description="Fit score from 1 to 10 based on the analysis")
+    location: str = Field(description="Country of the job")
+    city: str = Field(description="City of the job")
+    a_summirize: str = Field(max_length=100, description="Alternate summary of the analysis, max 100 chars")
+    company: str = Field(description="The company name")
+    role: str = Field(description="Exact job title")
+    work_mode: Literal["remote", "hybrid", "onsite", "unknown"] = Field(description="Work mode extracted from the description")
+    apply_link: str = Field(description="Original LinkedIn URL, copied exactly without modification")
     
     
