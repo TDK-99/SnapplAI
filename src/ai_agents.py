@@ -106,18 +106,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 - 4-5: Partial fit — some relevant skills but significant gaps remain
                 - 6-7: Good fit — most key skills covered, minor gaps only
                 - 8-9: Strong fit — skills, seniority, and domain all align well
-                - 10: Near-perfect fit — candidate matches almost every requirement
-
-                ## Output rules
-                - "analysis": concise reasoning covering key match/mismatch criteria.
-                - "score": integer 1-10, based on your analysis above
-                - "location": country of the job
-                - "city": city of the job 
-                - "a_summirize": alternate summary of the analysis max 100 chars.
-                - "company": the company
-                - "role": exact job title 
-                - "work_mode": one of "remote", "hybrid", "onsite", "unknown" — extract from description
-                - "apply_link": the original LinkedIn URL (https://www.linkedin.com/jobs/view/...), copy it exactly, never modify it"""
+                - 10: Near-perfect fit — candidate matches almost every requirement"""
     response_list= []
     for index, row in jobs.iterrows():
         response = client.models.generate_content(
