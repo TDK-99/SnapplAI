@@ -29,6 +29,8 @@ def main():
     print("Number of jobs found:", jobs["id"].count())
 
     jobs= agentic_summarize(jobs)
+
+    print("Number of jobs found after filter:", jobs["id"].count())
     
     print("summarization done, now analyzing jobs...", flush=True)
 
