@@ -20,11 +20,11 @@ env:
 
   search_term: "Data Analyst" #role
 
-  location: "Italy,UK,Spain" #check the list on file_config.txt #for multi country write like this "italy,UK"
+  location: Denmark #check the list on file_config.txt #for multi country write like this "italy,UK"
 
-  city: "Rome,Madrid,Milan"           #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
+  city: "Copenhagen,Odense"           #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
   
-  results_wanted: "20" # Max 100 results per run. For multiple countries, split evenly:
+  results_wanted: "50" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
 
   hours_old: "6" # when it post
@@ -33,7 +33,7 @@ env:
 
   work_from_home: "True" # leave empty if you are interest also on site work
 
-  remote_only: "True" #if you consider to work full remote insert True ,if not leave empty
+  remote_only: "" #if you consider to work full remote insert True ,if not leave empty
 
   dir_cv: "./your_cv_config/Valerio_Mezzopra_CV.pdf" #modifify after config\
 

@@ -61,7 +61,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
     city =os.getenv("city").split(",")
 
-    if os.getenv("city") is None:
+    if os.getenv("city") is False:
         jobs
     else:
         jobs= jobs[jobs["city"].isin(city)]
