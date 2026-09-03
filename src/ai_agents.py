@@ -134,25 +134,16 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     
     job_all= jobs_score
 
-    jobs_score.columns
+    if "score" not in jobs_score.columns:
+        jobs_score = "No matching jobs found, try broader search filters."
+    else:
+        jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
+        jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
+        jobs_score = jobs_score.to_dict(orient="records")
+        jobs_score = json.dumps(jobs_score, indent=1)
+        jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
 
-    print("response_list sample:", response_list[:2], flush=True)
-    print("columns:", jobs_score.columns.tolist(), flush=True)
-
-    jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
-
-    # df to dict
-
-    jobs_score = jobs_score[["score","location","city","company","role","work_mode","a_summirize","apply_link"]]
-
-    jobs_score = jobs_score.to_dict(orient="records")
-
-    #clean the dict output
-
-    jobs_score = json.dumps(jobs_score, indent=1)
-    jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
-
-    
+        
     return jobs_score, job_all
 
 
