@@ -5,7 +5,6 @@ from typing import Optional, Literal
 
 class JobSummary(BaseModel):
     city: str  = Field(description="the city")
-    location: str  = Field(description="the country")
     role: str = Field(description="Job title")
     seniority: str = Field(description="Seniority level: intern|junior|mid|senior|lead|manager|director")
     modality: str = Field(description="Work modality: remote|hybrid|on-site")
