@@ -124,11 +124,17 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
     # filter df with env score
     
-    job_all= jobs_score
 
     if "score" not in jobs_score.columns:
         jobs_score = "No matching jobs found, try broader search filters."
     else:
+        if not os.getenv("city"):
+            jobs_score
+            job_all= jobs_score
+        else:
+            city =os.getenv("city").split(",")
+            job_all= jobs_score
+            jobs_score= jobs_score[jobs_score["city"].isin(city)]
         jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
         jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
         jobs_score = jobs_score.to_dict(orient="records")
