@@ -145,7 +145,7 @@ SnapplAI/
 - **Scoring calibration** — benchmark AI scores against known good/bad matches to improve match quality
 - **Output redesign** — better visual formatting for the email report (job cards, readability, direct links)
 
- 
+--- 
 ## 🤝 Contributing
 
 Contributions are welcome — bug fixes, new features, or docs improvements.
