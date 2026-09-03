@@ -58,15 +58,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
         jobs = jobs[jobs["modality"].isin(["remote"])]
     else:
         jobs
-
-    city =os.getenv("city").split(",")
-
-    if os.getenv("city") is False:
-        jobs
-    else:
-        jobs= jobs[jobs["city"].isin(city)]
-
-
+        
     jobs = jobs.drop(columns=[
     'site', 'job_url_direct', 'date_posted', 'job_type', 'salary_source',
     'interval', 'min_amount', 'max_amount', 'currency', 'emails',
