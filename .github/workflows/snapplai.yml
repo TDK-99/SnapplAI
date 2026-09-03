@@ -20,7 +20,7 @@ env:
 
   search_term: "Data Analyst" #role
 
-  location: Denmark #check the list on file_config.txt #for multi country write like this "italy,UK"
+  location: Italy #check the list on file_config.txt #for multi country write like this "italy,UK"
 
   city: False          #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
   
