@@ -28,8 +28,6 @@ def main():
     
     print("Number of jobs found:", jobs["id"].count(), flush=True)
 
-    print(jobs["location"].unique(), flush=True)
-
     jobs= agentic_summarize(jobs)
 
     print("Number of jobs found after filter:", jobs["id"].count())
