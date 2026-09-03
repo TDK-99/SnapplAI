@@ -18,13 +18,13 @@ env:
  
   site_name: "linkedin" #dont modify this
 
-  search_term: "Data" #role
+  search_term: "Data Analyst" #role
 
   location: "Denmark,Switzerland" #check the list on file_config.txt #for multi country write like this "italy,UK"
 
   city: "Copenaghen,Bern,Aarhus"      # leave empty for no filter city - Milan for one city - "Milan,Rome" for more than one city
   
-  results_wanted: "50" # Max 100 results per run. For multiple countries, split evenly:
+  results_wanted: "60" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
                        # if you put one and more city put min 50
 
