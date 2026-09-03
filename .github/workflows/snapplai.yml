@@ -24,7 +24,7 @@ env:
 
   city: "Rome"          #"" for no filter city - MIlan for one city - "Milan,Rome" for more than one city
   
-  results_wanted: "50" # Max 100 results per run. For multiple countries, split evenly:
+  results_wanted: "30" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
 
   hours_old: "24" # when it post
