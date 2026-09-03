@@ -27,7 +27,7 @@ env:
   results_wanted: "50" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
 
-  hours_old: "6" # when it post
+  hours_old: "24" # when it post
 
   linkedin_fetch_description: "True" # this should be always true
 
