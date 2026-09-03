@@ -20,18 +20,21 @@ env:
 
   search_term: "Data Analyst" #role
 
-  location: "Italy,UK,Spain" #check the list on file_config.txt #for multi country write like this "italy,UK"
-  
-  results_wanted: "33" # Max 100 results per run. For multiple countries, split evenly:
-                       # e.g. 3 countries → ~33 each (100 / 3)
+  location: "Denmark,Switzerland,Italy" #check the list on file_config.txt #for multi country write like this "italy,UK"
 
-  hours_old: "6" # when it post
+  city: "Copenaghen,Bern,Aarhus,Zurich,Rome"      # leave empty for no filter city - Milan for one city - "Milan,Rome" for more than one city
+  
+  results_wanted: "30" # Max 100 results per run. For multiple countries, split evenly:
+                       # e.g. 3 countries → ~33 each (100 / 3)
+                       # if you put one and more city put min 50
+
+  hours_old: "24" # when it post
 
   linkedin_fetch_description: "True" # this should be always true
 
   work_from_home: "True" # leave empty if you are interest also on site work
 
-  remote_only: "True" #if you consider to work full remote insert True ,if not leave empty
+  remote_only: "" #if you consider to work full remote insert True ,if not leave empty
 
   dir_cv: "./your_cv_config/Valerio_Mezzopra_CV.pdf" #modifify after config\
 

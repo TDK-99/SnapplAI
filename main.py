@@ -26,9 +26,13 @@ from src.smtp import send_email
 def main():
     jobs= job_scraper()
     
-    print("Number of jobs found:", jobs["id"].count())
+    print("Number of jobs found:", jobs["id"].count(), flush=True)
+
+    print(jobs["location"].unique(), flush=True)
 
     jobs= agentic_summarize(jobs)
+
+    print("Number of jobs found after filter:", jobs["id"].count())
     
     print("summarization done, now analyzing jobs...", flush=True)
 

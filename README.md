@@ -19,7 +19,7 @@ Stop refreshing LinkedIn. This pipeline scrapes new job listings based on your s
 - [AI Output Fields](#-ai-output-fields)
 - [Setup](#-setup)
 - [Project Structure](#-project-structure)
-- [Roadmap v2](#-roadmap-v2)
+- [Roadmap v2](#️-roadmap-v2)
 - [Contributing](#-contributing)
 - [License](#-license)
 ---
