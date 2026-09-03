@@ -28,7 +28,7 @@ def main():
     
     print("Number of jobs found:", jobs["id"].count(), flush=True)
 
-    print(jobs[["location"]].nunique, flush=True)
+    print(jobs["location"].unique(), flush=True)
 
     jobs= agentic_summarize(jobs)
 
