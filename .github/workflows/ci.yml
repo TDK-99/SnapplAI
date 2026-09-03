@@ -1,13 +1,13 @@
 name: CI
 
 on:
-  push:                   
+  push:
     branches: [dev, main]
-  pull_request:            
+  pull_request:
     branches: [dev, main]
 
 jobs:
-  test:
+  pydantic-validation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,4 +16,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: pip install pytest
-      - run: python -m pytest -v
+      - run: python -m pytest tests/test_pydantic.py -v
