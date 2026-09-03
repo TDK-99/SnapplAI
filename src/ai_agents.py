@@ -136,8 +136,8 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
     jobs_score.columns
 
-    print("response_list sample:", response_list[:2])
-    print("columns:", jobs_score.columns.tolist())
+    print("response_list sample:", response_list[:2], flush=True)
+    print("columns:", jobs_score.columns.tolist(), flush=True))
 
     jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
 
