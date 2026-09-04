@@ -1,6 +1,9 @@
 from src.daily_scraper import job_scraper
 from src.ai_agents import agentic_summarize,agentic_analyze
 from src.smtp import send_email
+import logging
+logging.getLogger("google_genai.models").setLevel(logging.ERROR)
+
 
 def main():
     jobs= job_scraper()
