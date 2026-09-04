@@ -19,7 +19,7 @@ Stop refreshing LinkedIn. This pipeline scrapes new job listings based on your s
 - [AI Output Fields](#-ai-output-fields)
 - [Setup](#-setup)
 - [Project Structure](#-project-structure)
-- [Roadmap v2](#-roadmap-v2)
+- [Roadmap v2](#️-roadmap-v2)
 - [Contributing](#-contributing)
 - [License](#-license)
 ---
@@ -144,11 +144,11 @@ SnapplAI/
 ---
 ## 🛣️ Roadmap v2
  
-- **Multi-country scraping** — search across 2+ countries in a single run (custom feature, not supported by python-jobspy out of the box)
+- ✅**Multi-country scraping** — search across 2+ countries in a single run (custom feature, not supported by python-jobspy out of the box)
 - **Excel/DB deduplication** — persistent storage to compare runs and filter out already-seen listings, so you never score the same job twice
 - **Scoring calibration** — benchmark AI scores against known good/bad matches to improve match quality
 - **Output redesign** — better visual formatting for the email report (job cards, readability, direct links)
-
+- **Fix issue** — fix main issue: fallback model, smtp for non @gmail user and github action new user
  
 ## 🤝 Contributing
 

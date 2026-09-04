@@ -8,9 +8,11 @@ logging.getLogger("google_genai.models").setLevel(logging.ERROR)
 def main():
     jobs= job_scraper()
     
-    print("Number of jobs found:", jobs["id"].count())
+    print("Number of jobs found:", jobs["id"].count(), flush=True)
 
     jobs= agentic_summarize(jobs)
+
+    print("Number of jobs found after filter:", jobs["id"].count())
     
     print("summarization done, now analyzing jobs...", flush=True)
 
