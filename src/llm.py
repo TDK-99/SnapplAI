@@ -28,7 +28,7 @@ _current_model_idx = 0
 
 
 def generate_content_resilient(client, *, contents, config,
-                               max_retries=5, base_delay=2.0):
+                               max_retries=5, base_delay=2.0, row_num=None):
     """Call the Gemini API with retry + backoff and sticky, circular fallback.
 
     Starts from the last model known to work (`_current_model_idx`). The current
@@ -58,7 +58,7 @@ def generate_content_resilient(client, *, contents, config,
                     raise
                 last_exc = e
                 delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
-                print(f"[llm] {model} -> {e.code}, attempt "
+                print(f"[llm] row:{row_num} | {model} -> {e.code}, attempt "
                       f"{attempt + 1}/{max_retries}, waiting {delay:.1f}s",
                       flush=True)
                 time.sleep(delay)
