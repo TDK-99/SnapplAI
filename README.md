@@ -55,7 +55,7 @@ The pipeline runs in 4 sequential steps, fully automated:
 | Scraping | python-jobspy (LinkedIn) |
 | Data | pandas, PyPDF / PyMuPDF |
 | Parsing | BeautifulSoup4 |
-| Email | smtplib (SMTP) |
+| Email | smtplib (SMTP) — provider-agnostic (Gmail, Outlook/Office365, ...) |
 | Config | python-dotenv |
  
 ---
@@ -80,7 +80,7 @@ Each job in the email is ranked by match score and includes company, role, work 
 ## 🚀 Setup
  
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey)
-2. Generate a [Gmail App Password](https://myaccount.google.com/apppasswords)
+2. Generate an app password for your email (e.g. [Gmail App Password](https://myaccount.google.com/apppasswords)). For non-Gmail providers, set `SMTP_HOST`/`SMTP_PORT` in `.env` — e.g. Outlook/Office365 uses `smtp.office365.com` on port `587` (STARTTLS); Gmail defaults to `smtp.gmail.com` on `465` (SSL).
 3. Place your CV (PDF) in `your_cv_config/`
 4. Configure search settings: use `file_config.txt` to create your `file_config.env` ([filter docs](https://github.com/Bunsly/JobSpy))
 5. Create your `.env` from the template: `cp example_env.txt .env`

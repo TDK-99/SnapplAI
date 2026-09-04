@@ -1,3 +1,12 @@
 LLM_GEMINI= # add your api key on google ai studio
+
+# SMTP (provider-agnostic). Defaults target Gmail; override for other providers.
+# Gmail:            SMTP_HOST=smtp.gmail.com      SMTP_PORT=465 (SSL)
+# Outlook/Office365: SMTP_HOST=smtp.office365.com  SMTP_PORT=587 (STARTTLS)
+SMTP_HOST= # optional, default smtp.gmail.com
+SMTP_PORT= # optional, default 465 (use 587 for Outlook/Office365)
+SMTP_USER= # your email address (falls back to GMAIL_USER if empty)
+SMTP_PASSWORD= # your app password (falls back to GMAIL_APP_PASSWORD if empty)
+
 GMAIL_APP_PASSWORD= # app password in the google account 2 factor section (remove space on it)
 GMAIL_USER= # your gmail mail
