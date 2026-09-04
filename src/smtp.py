@@ -24,7 +24,6 @@ def send_email(jobs,job_all):
 
     """
 
-    print(f"SMTP: user={os.getenv('GMAIL_USER')} pwd_len={len(os.getenv('GMAIL_APP_PASSWORD') or '')}", flush=True)
     msg = EmailMessage()
     msg["Subject"] = f"AI Linkedin job - result of {today}--{hour}"
     msg["From"] = os.getenv("GMAIL_USER")
