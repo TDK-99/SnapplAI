@@ -43,6 +43,8 @@ The pipeline runs in 4 sequential steps, fully automated:
 **3. Analyze** → `agentic_analyze()` reads your CV and scores each listing on how well it matches your profile. Chain-of-thought enforced: the model writes `analysis` before `score` in the JSON schema, so reasoning comes before judgment.
  
 **4. Deliver** → `send_email()` builds an email with the top-scored jobs and sends it to your inbox via SMTP.
+
+**Resilience:** each Gemini call retries with exponential backoff on transient errors (`429`/`500`/`503`) and falls back through a fixed chain (`gemini-3.5-flash-lite` → `gemini-3.1-flash-lite`), so a temporarily overloaded model no longer crashes the whole pipeline.
  
 **Key principle:** AI reads and evaluates. Python orchestrates and delivers. No frameworks, no agents-calling-agents — just a clean data pipeline with LLM calls where they matter.
  
@@ -51,7 +53,8 @@ The pipeline runs in 4 sequential steps, fully automated:
  
 | Component | Technology |
 |-----------|-----------|
-| LLM | Google GenAI SDK — `gemini-3.5-flash-lite` |
+| LLM | Google GenAI SDK — `gemini-3.5-flash-lite` (primary), `gemini-3.1-flash-lite` (fallback) |
+| Resilience | Retry with exponential backoff + fixed model fallback chain (`src/llm.py`) |
 | Scraping | python-jobspy (LinkedIn) |
 | Data | pandas, PyPDF / PyMuPDF |
 | Parsing | BeautifulSoup4 |
@@ -118,6 +121,7 @@ SnapplAI/
 ├── src/
 │   ├── daily_scraper.py    # LinkedIn scraping with python-jobspy
 │   ├── ai_agents.py        # Gemini calls: summarize + analyze
+│   ├── llm.py              # Resilient Gemini wrapper: retry/backoff + model fallback
 │   ├── smtp.py             # Email builder and SMTP sender
 │   └── pydantic.py         # pydantic class for force ai output
 ├── your_cv_config/

@@ -1,5 +1,4 @@
 import pandas as pd
-from schedule import jobs
 from pypdf import PdfReader
 from dotenv import load_dotenv
 import os
@@ -9,6 +8,7 @@ from google.genai import types
 import time
 
 from src.pydantic import JobSummary, JobScore
+from src.llm import generate_content_resilient
 
 load_dotenv(".env")
 load_dotenv("your_cv_config/file_config.env")
@@ -29,15 +29,15 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
 
     for index, row in jobs.iterrows():
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
-            contents=f"{row["location"]},{row["title"]}, {row["description"]}",
+        response = generate_content_resilient(
+            client,
+            contents=f"{row['description']}",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
-                response_mime_type="application/json", 
+                response_mime_type="application/json",
                 response_schema=JobSummary # forza output JSON
-            )
+            ),
         )
         jobs.at[index, "summary"] = response.text
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
@@ -101,16 +101,16 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 - 10: Near-perfect fit — candidate matches almost every requirement"""
     response_list= []
     for index, row in jobs.iterrows():
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
-            contents=f"""{row["role"]},{row["location"]},{row["city"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]}, 
+        response = generate_content_resilient(
+            client,
+            contents=f"""{row["title"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
                         {row["required_skills"]}, {row["nice_to_have_skills"]}, {row["required_education"]}, {row["languages"]},{row["job_url"]}""",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
                 response_mime_type="application/json",
                 response_schema=JobScore  # forza output JSON
-            )
+            ),
         )
         response_list.append(response.text)
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
