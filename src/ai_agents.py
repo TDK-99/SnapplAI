@@ -38,6 +38,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
                 response_mime_type="application/json",
                 response_schema=JobSummary # forza output JSON
             ),
+            row_num=index
         )
         jobs.at[index, "summary"] = response.text
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
@@ -111,6 +112,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 response_mime_type="application/json",
                 response_schema=JobScore  # forza output JSON
             ),
+            row_num=index
         )
         response_list.append(response.text)
         time.sleep(7)  # wait 7 seconds between requests to avoid rate limiting
