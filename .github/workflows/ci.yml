@@ -20,6 +20,7 @@ jobs:
 
   ai-summarize-validation:
     runs-on: ubuntu-latest
+    environment: snapplai
     env:
       LLM_GEMINI: ${{ secrets.LLM_GEMINI }}
     steps:
