@@ -31,7 +31,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     for index, row in jobs.iterrows():
         response = generate_content_resilient(
             client,
-            contents=f"{row['description']}",
+            contents=f"{row["location"]},{row["title"]}, {row["description"]}",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
