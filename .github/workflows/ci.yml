@@ -30,6 +30,5 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: pip install pytest
-      - run: python -c "import os; print('LLM_GEMINI set:', bool(os.getenv('LLM_GEMINI')))"
       - run: python -m pytest tests/test_ai_summarize.py -v
       
