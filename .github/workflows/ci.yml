@@ -20,6 +20,8 @@ jobs:
 
   ai-summarize-validation:
     runs-on: ubuntu-latest
+    env:
+      LLM_GEMINI: ${{ secrets.LLM_GEMINI }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
