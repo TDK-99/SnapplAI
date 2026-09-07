@@ -2,6 +2,8 @@ import pytest
 import pandas as pd
 import json
 from unittest.mock import patch, MagicMock
+from pypdf import PdfReader
+
 
 
 @pytest.fixture
@@ -47,20 +49,25 @@ def fake_api_response():
     }
 
 
+@patch("src.ai_agents.PdfReader")
 @patch("src.ai_agents.time.sleep")
 @patch("src.ai_agents.generate_content_resilient")
 def test_agentic_analyze_processes_columns(
     mock_generate,
     mock_sleep,
+    mock_pdf_reader,
     fake_jobs,
     fake_api_response
 ):
+    mock_pdf_reader.return_value.pages = [MagicMock(extract_text=lambda: "Fake CV content")]
+
     mock_response = MagicMock()
     mock_response.text = json.dumps(fake_api_response)
     mock_generate.return_value = mock_response
 
     from src.ai_agents import agentic_analyze
     _, result = agentic_analyze(fake_jobs)
+
     assert mock_generate.call_count == 1
 
     call_kwargs = mock_generate.call_args.kwargs
