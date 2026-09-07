@@ -48,6 +48,15 @@ def fake_api_response():
         "apply_link": "https://www.linkedin.com/jobs/view/123456789"
     }
 
+from unittest.mock import patch, MagicMock
+from os import environ
+
+@patch.dict(environ, {
+    "dir_cv": "fake.pdf",
+    "score_config": "5",
+    "city": "Roma",
+})
+
 
 @patch("src.ai_agents.PdfReader")
 @patch("src.ai_agents.time.sleep")
