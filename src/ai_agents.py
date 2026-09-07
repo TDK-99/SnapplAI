@@ -17,13 +17,16 @@ client = genai.Client(api_key=os.getenv("LLM_GEMINI"))
 
 def agentic_summarize(jobs): # summirize the description and create an output of dettail of the job descriprion
     
-
+    city =os.getenv("location")
 
     system_prompt= """ 
     Extract structured data from a job posting. Return ONLY valid JSON, no markdown, no text.
     If not in the posting, use null. Do not invent. Keep original language for title and responsibilities. Ignore benefits, perks, company values.
-    Few note:
-    for the role dont invent take fromt {row["title"]} and for location always write in english so if you find Roma put Rome"""
+    Few IMPORTANT note:
+    - for the role take from {row["title"]} 
+    - for city take from  {row["location"]} always in english and only the city
+    - if {row["location"]} is empty then search the city in{row["description"]}, and if you dont find nothing means is remote put one of os.getenv("city")
+    """
     
     load_dotenv(".env")
 
@@ -31,7 +34,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     for index, row in jobs.iterrows():
         response = generate_content_resilient(
             client,
-            contents=f"{row["location"]},{row["title"]}, {row["description"]}",
+            contents=f"{row["location"]},{row["title"]}, {row["description"]}, {os.getenv("city")}",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
