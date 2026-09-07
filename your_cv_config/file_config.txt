@@ -6,8 +6,11 @@ search_term= "Data Analyst"
 
 location= "UK" #check the list #for multi country write like this "italy,UK"
 
+city= leave empty for no filter city - MIlan for one city - "Milan,Rome" for more than one city
+
 results_wanted= 20 # Max 100 results per run. For multiple countries, split evenly:
-                   # e.g. 3 countries → ~33 each (100 / 3)
+                       # e.g. 3 countries → ~33 each (100 / 3)
+                       # if you put one and more city put min 50
 hours_old= 2 # when it post
 
 linkedin_fetch_description= True # this should be always true
