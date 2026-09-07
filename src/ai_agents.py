@@ -107,7 +107,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     for index, row in jobs.iterrows():
         response = generate_content_resilient(
             client,
-            contents=f"""{row["title"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
+            contents=f"""{row["title"]},{row["city"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
                         {row["required_skills"]}, {row["nice_to_have_skills"]}, {row["required_education"]}, {row["languages"]},{row["job_url"]}""",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
