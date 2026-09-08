@@ -9,9 +9,10 @@ name: SnapplAI — Job Alerts
 
 # --- WHEN does it run? ---
 on:
-  schedule:
-    - cron: "0 9-18/3 * * *" #        # Every 3 hour on 9-18
-  workflow_dispatch:               # Manual run from Actions tab
+  # schedule:
+  #   - cron: "0 9-18/3 * * *" # Every 3 hours: 09:00, 12:00, 15:00, 18:00 UTC
+  workflow_dispatch:
+           # Manual run from Actions tab
 
 # --- USER SETTINGS (edit these after forking) ---
 env:
