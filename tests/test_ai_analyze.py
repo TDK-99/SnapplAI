@@ -75,7 +75,7 @@ def test_agentic_analyze_processes_columns(
     mock_generate.return_value = mock_response
 
     from src.ai_agents import agentic_analyze
-    _, result = agentic_analyze(fake_jobs)
+    _, result, _, = agentic_analyze(fake_jobs)
 
     assert mock_generate.call_count == 1
 

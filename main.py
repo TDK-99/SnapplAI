@@ -10,17 +10,19 @@ def main():
     
     print("Number of jobs found:", jobs["id"].count(), flush=True)
 
-    jobs= agentic_summarize(jobs)
+    jobs,report= agentic_summarize(jobs)
 
-    print("Number of jobs found after filter:", jobs["id"].count())
+    print("Number of jobs after work mod filter:", jobs["id"].count())
     
     print("summarization done, now analyzing jobs...", flush=True)
 
-    jobs, job_all= agentic_analyze(jobs)
+    jobs, job_all,count_id= agentic_analyze(jobs)
     
     print("analysis done, now sending email...", flush=True)
 
-    send_email(jobs,job_all)
+    print("Number of jobs after city filter:", count_id)
+
+    send_email(jobs,job_all,report)
     
     print("email sent, process completed.", flush=True)
 

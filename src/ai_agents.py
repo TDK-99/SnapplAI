@@ -6,6 +6,7 @@ import json
 from google import genai
 from google.genai import types
 import time
+from io import BytesIO
 
 from src.pydantic import JobSummary, JobScore
 from src.llm import generate_content_resilient
@@ -52,6 +53,48 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
     jobs = pd.concat([jobs, df_expanded], axis=1)
 
+    jobs = jobs.drop(columns=[
+    'site', 'job_url_direct', 'date_posted', 'job_type', 'salary_source',
+    'interval', 'min_amount', 'max_amount', 'currency', 'emails',
+    'listing_type', 'company_logo', 'company_addresses',
+    'company_num_employees', 'company_revenue', 'company_description',
+    'skills', 'experience_range', 'company_rating', 'company_reviews_count',
+    'vacancy_count', 'work_from_home_type','summary','summary_parsed','company_url_direct'
+    ])
+
+    def build_analytics_report(df: pd.DataFrame) -> str:
+        lines = ["=== Job Search Analytics ===\n"]
+
+        lines.append("🔎 Jobs:")
+        lines.append(df["id"].value_counts().to_string())
+        
+
+        lines.append("📍 Cities:")
+        lines.append(df["city"].value_counts().to_string())
+
+        avg_exp = df["experience_years_min"].mean()
+        lines.append(f"\n📊 Avg min experience years: {avg_exp:.1f}")
+
+        lines.append("\n🎯 Seniority:")
+        lines.append(df["seniority"].value_counts().to_string())
+
+        lines.append(f"\n💼 Roles found ({df['role'].nunique()} unique):")
+        lines.append(df["role"].value_counts().to_string())
+
+        lines.append("\n🏠 Modality:")
+        lines.append(df["modality"].value_counts().to_string())
+
+        lines.append("\n🌍 Languages:")
+        lines.append(df["languages"].explode().value_counts().to_string())
+
+        return "\n".join(lines)
+
+    report = build_analytics_report(jobs)
+
+    buffer_report = BytesIO()
+    buffer_report.write(report.encode("utf-8"))
+    report = buffer_report.getvalue()
+
 
     if os.getenv("work_from_home") == "True":
         jobs = jobs[jobs["modality"].isin(["remote","hybrid"])]
@@ -63,16 +106,9 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     else:
         jobs
         
-    jobs = jobs.drop(columns=[
-    'site', 'job_url_direct', 'date_posted', 'job_type', 'salary_source',
-    'interval', 'min_amount', 'max_amount', 'currency', 'emails',
-    'listing_type', 'company_logo', 'company_addresses',
-    'company_num_employees', 'company_revenue', 'company_description',
-    'skills', 'experience_range', 'company_rating', 'company_reviews_count',
-    'vacancy_count', 'work_from_home_type','summary','summary_parsed','company_url_direct'
-    ])
+
         
-    return jobs
+    return jobs, report
 
 
 
@@ -142,12 +178,13 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
             job_all= jobs_score
         jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
         jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
+        count_id =jobs_score["role"].count()
         jobs_score = jobs_score.to_dict(orient="records")
         jobs_score = json.dumps(jobs_score, indent=1)
         jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
 
         
-    return jobs_score, job_all
+    return jobs_score, job_all,count_id
 
 
 

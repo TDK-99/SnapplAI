@@ -46,6 +46,10 @@ The pipeline runs in 4 sequential steps, fully automated:
  
 **4. Deliver** → `send_email()` builds an email with the top-scored jobs and sends it to your inbox via SMTP.
 
+**5. Apply and analytics** → Two attachments complete the report: top match, a filtered Excel with all scraped jobs, and an analytics .txt summarizing the batch.
+
+--
+
 **Resilience:** each Gemini call retries with exponential backoff on transient errors (`429`/`500`/`503`) and falls back through a fixed chain (`gemini-3.5-flash-lite` → `gemini-3.1-flash-lite`), so a temporarily overloaded model no longer crashes the whole pipeline.
  
 **Key principle:** AI reads and evaluates. Python orchestrates and delivers. No frameworks, no agents-calling-agents — just a clean data pipeline with LLM calls where they matter.
@@ -77,7 +81,13 @@ The entire pipeline operates on a single pandas DataFrame that gets enriched at 
  
 ![Pipeline Architecture](assets/output.png)
 
-Each job in the email is ranked by match score and includes company, role, work mode, a one-line AI summary explaining why it matched (or didn't), and a direct apply link to the LinkedIn listing.
+Each job in the email is ranked by fit score and includes:
+
+- city, company, role, and work mode
+- a one-line AI summary explaining the match
+- a direct apply link to the LinkedIn listing
+
+Two attachments complete the report: a filtered Excel with all scraped jobs, and an analytics .txt summarizing the batch.
 
  
 ---
@@ -126,18 +136,29 @@ SnapplAI/
 │   ├── llm.py              # Resilient Gemini wrapper: retry/backoff + model fallback
 │   ├── smtp.py             # Email builder and SMTP sender
 │   └── pydantic.py         # pydantic class for force ai output
+├── tests/
+│   ├── test_ai_analyze.py  # Unit test for AI analysis agent
+│   ├── test_ai_summarize.py # Unit test for AI summarize agent
+│   ├── test_pydantic.py    # Unit test for pydantic validation
+│   └── test_smtp.py        # Unit test for SMTP email sending
 ├── your_cv_config/
 │   ├── .gitkeep            # Keeps folder tracked in git
 │   ├── file_config.env     # Your settings (role, location, filters)
 │   ├── file_config.txt     # Additional config parameters
 │   └── Your_CV.pdf         # Your CV goes here (PDF)
+├── assets/                 # Output screenshots and docs images
 ├── .github/
 │   └── workflows/
-│       └── snapplai.yml    # GitHub Actions workflow (scheduled + manual)
+│       ├── snapplai.yml    # GitHub Actions workflow (scheduled + manual)
+│       ├── ci.yml          # CI pipeline — runs tests on push/PR
+│       └── yml.example     # Template for GitHub Actions workflow
 ├── Dockerfile              # Run anywhere with Docker
 ├── .env                    # API keys and SMTP credentials (git-ignored)
+├── .gitignore
 ├── example_env.txt         # Template for .env variables
 ├── requirements.txt        # Dependencies
+├── CONTRIBUTING.md         # Contribution guidelines
+├── SUPPORT.md              # Support and contact info
 ├── LICENSE                 # MIT
 └── README.md
 ```

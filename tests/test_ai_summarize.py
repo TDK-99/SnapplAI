@@ -8,6 +8,7 @@ from unittest.mock import patch, MagicMock
 def fake_jobs():
     return pd.DataFrame([
         {
+            "id": "123",
             "location": "Roma",
             "title": "Data Engineer",
             "description": "We are looking for a data engineer...",
@@ -42,11 +43,16 @@ def fake_jobs():
 def fake_api_response():
     return {
         "role": "Data Engineer",
-        "location": "Rome",
+        "city": "Rome",
         "modality": "remote",
         "responsibilities": ["Build ETL pipelines"],
         "requirements": ["Python", "SQL"],
-        "seniority": "mid"
+        "seniority": "mid",
+        "experience_years_min": 3,
+        "required_skills": ["Python", "SQL"],
+        "nice_to_have_skills": ["Spark"],
+        "required_education": None,
+        "languages": ["English C1", "Italian native"]
     }
 
 
@@ -63,7 +69,7 @@ def test_agentic_summarize_processes_columns(
     mock_generate.return_value = mock_response
 
     from src.ai_agents import agentic_summarize
-    result = agentic_summarize(fake_jobs)
+    result,_ = agentic_summarize(fake_jobs)
 
     assert mock_generate.call_count == 1
 
