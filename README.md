@@ -46,6 +46,10 @@ The pipeline runs in 4 sequential steps, fully automated:
  
 **4. Deliver** → `send_email()` builds an email with the top-scored jobs and sends it to your inbox via SMTP.
 
+**5. Apply and analytics** → Two attachments complete the report: top match, a filtered Excel with all scraped jobs, and an analytics .txt summarizing the batch.
+
+--
+
 **Resilience:** each Gemini call retries with exponential backoff on transient errors (`429`/`500`/`503`) and falls back through a fixed chain (`gemini-3.5-flash-lite` → `gemini-3.1-flash-lite`), so a temporarily overloaded model no longer crashes the whole pipeline.
  
 **Key principle:** AI reads and evaluates. Python orchestrates and delivers. No frameworks, no agents-calling-agents — just a clean data pipeline with LLM calls where they matter.
@@ -77,7 +81,13 @@ The entire pipeline operates on a single pandas DataFrame that gets enriched at 
  
 ![Pipeline Architecture](assets/output.png)
 
-Each job in the email is ranked by match score and includes company, role, work mode, a one-line AI summary explaining why it matched (or didn't), and a direct apply link to the LinkedIn listing.
+Each job in the email is ranked by fit score and includes:
+
+- city, company, role, and work mode
+- a one-line AI summary explaining the match
+- a direct apply link to the LinkedIn listing
+
+Two attachments complete the report: a filtered Excel with all scraped jobs, and an analytics .txt summarizing the batch.
 
  
 ---
