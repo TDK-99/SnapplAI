@@ -106,16 +106,8 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     else:
         jobs
         
-    jobs = jobs.drop(columns=[
-    'site', 'job_url_direct', 'date_posted', 'job_type', 'salary_source',
-    'interval', 'min_amount', 'max_amount', 'currency', 'emails',
-    'listing_type', 'company_logo', 'company_addresses',
-    'company_num_employees', 'company_revenue', 'company_description',
-    'skills', 'experience_range', 'company_rating', 'company_reviews_count',
-    'vacancy_count', 'work_from_home_type','summary','summary_parsed','company_url_direct'
-    ])
         
-    return jobs
+    return jobs, report
 
 
 
