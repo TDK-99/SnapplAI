@@ -18,7 +18,7 @@ load_dotenv("your_cv_config/file_config.env")
 
 
 
-def send_email(jobs,job_all):
+def send_email(jobs,job_all,report):
 
     body=f""" RESULT:
     {jobs}
@@ -50,7 +50,14 @@ def send_email(jobs,job_all):
         jobs_log,
         maintype="application",
         subtype="xlsx",
-        filename="all_jobs.xlsx"
+        filename=f"jobs_filter_{today}_.xls"
+    )
+
+    msg.add_attachment(
+        report,
+        maintype="application",
+        subtype="txt",
+        filename=f"analytics_{os.getenv("search_term")}_{today}.txt"
     )
     
     

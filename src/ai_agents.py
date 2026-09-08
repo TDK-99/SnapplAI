@@ -106,6 +106,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     else:
         jobs
         
+
         
     return jobs, report
 
