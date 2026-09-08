@@ -8,6 +8,7 @@ from unittest.mock import patch, MagicMock
 def fake_jobs():
     return pd.DataFrame([
         {
+            "id": "123",
             "location": "Roma",
             "title": "Data Engineer",
             "description": "We are looking for a data engineer...",
