@@ -1,4 +1,6 @@
 # 🔍 SnapplAI — AI-Powered LinkedIn Job Alerts
+
+📖 [Contributing](CONTRIBUTING.md) · ❓ [Get Help](SUPPORT.md)
  
 Stop refreshing LinkedIn. This pipeline scrapes new job listings based on your settings, uses AI agents to summarize each one and score it against your CV, then delivers only the best matches straight to your inbox 📬 — so you're always first to apply 🚀
  
