@@ -13,6 +13,7 @@ hour= datetime.now().strftime("%H")
 today= date.today()
 
 load_dotenv(".env")
+load_dotenv("your_cv_config/file_config.env")
 
 
 
@@ -33,7 +34,7 @@ def send_email(jobs,job_all):
     smtp_password = os.getenv("SMTP_PASSWORD") or os.getenv("GMAIL_APP_PASSWORD")
 
     msg = EmailMessage()
-    msg["Subject"] = f"AI Linkedin job - result of {today}--{hour}"
+    msg["Subject"] = f"AI Linkedin job - result of {os.getenv("search_term")} {today}--{hour}"
     msg["From"] = smtp_user
     msg["To"] = smtp_user
     msg.set_content(body)
