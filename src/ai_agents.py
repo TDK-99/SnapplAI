@@ -6,6 +6,7 @@ import json
 from google import genai
 from google.genai import types
 import time
+from io import BytesIO
 
 from src.pydantic import JobSummary, JobScore
 from src.llm import generate_content_resilient
@@ -87,6 +88,13 @@ def agentic_summarize(jobs): # summirize the description and create an output of
         lines.append(df["languages"].explode().value_counts().to_string())
 
         return "\n".join(lines)
+
+    report = build_analytics_report(jobs)
+
+    buffer_report = BytesIO()
+    buffer_report.write(report.encode("utf-8"))
+    report = buffer_report.getvalue()
+
 
     if os.getenv("work_from_home") == "True":
         jobs = jobs[jobs["modality"].isin(["remote","hybrid"])]
