@@ -177,12 +177,13 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
             job_all= jobs_score
         jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
         jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
+        count_id =jobs_score["role"].count()
         jobs_score = jobs_score.to_dict(orient="records")
         jobs_score = json.dumps(jobs_score, indent=1)
         jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
 
         
-    return jobs_score, job_all
+    return jobs_score, job_all,count_id
 
 
 
