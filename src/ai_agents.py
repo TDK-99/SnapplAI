@@ -52,6 +52,41 @@ def agentic_summarize(jobs): # summirize the description and create an output of
 
     jobs = pd.concat([jobs, df_expanded], axis=1)
 
+    jobs = jobs.drop(columns=[
+    'site', 'job_url_direct', 'date_posted', 'job_type', 'salary_source',
+    'interval', 'min_amount', 'max_amount', 'currency', 'emails',
+    'listing_type', 'company_logo', 'company_addresses',
+    'company_num_employees', 'company_revenue', 'company_description',
+    'skills', 'experience_range', 'company_rating', 'company_reviews_count',
+    'vacancy_count', 'work_from_home_type','summary','summary_parsed','company_url_direct'
+    ])
+
+    def build_analytics_report(df: pd.DataFrame) -> str:
+        lines = ["=== Job Search Analytics ===\n"]
+
+        lines.append("🔎 Jobs:")
+        lines.append(df["id"].value_counts().to_string())
+        
+
+        lines.append("📍 Cities:")
+        lines.append(df["city"].value_counts().to_string())
+
+        avg_exp = df["experience_years_min"].mean()
+        lines.append(f"\n📊 Avg min experience years: {avg_exp:.1f}")
+
+        lines.append("\n🎯 Seniority:")
+        lines.append(df["seniority"].value_counts().to_string())
+
+        lines.append(f"\n💼 Roles found ({df['role'].nunique()} unique):")
+        lines.append(df["role"].value_counts().to_string())
+
+        lines.append("\n🏠 Modality:")
+        lines.append(df["modality"].value_counts().to_string())
+
+        lines.append("\n🌍 Languages:")
+        lines.append(df["languages"].explode().value_counts().to_string())
+
+        return "\n".join(lines)
 
     if os.getenv("work_from_home") == "True":
         jobs = jobs[jobs["modality"].isin(["remote","hybrid"])]
