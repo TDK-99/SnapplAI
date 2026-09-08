@@ -136,18 +136,29 @@ SnapplAI/
 │   ├── llm.py              # Resilient Gemini wrapper: retry/backoff + model fallback
 │   ├── smtp.py             # Email builder and SMTP sender
 │   └── pydantic.py         # pydantic class for force ai output
+├── tests/
+│   ├── test_ai_analyze.py  # Unit test for AI analysis agent
+│   ├── test_ai_summarize.py # Unit test for AI summarize agent
+│   ├── test_pydantic.py    # Unit test for pydantic validation
+│   └── test_smtp.py        # Unit test for SMTP email sending
 ├── your_cv_config/
 │   ├── .gitkeep            # Keeps folder tracked in git
 │   ├── file_config.env     # Your settings (role, location, filters)
 │   ├── file_config.txt     # Additional config parameters
 │   └── Your_CV.pdf         # Your CV goes here (PDF)
+├── assets/                 # Output screenshots and docs images
 ├── .github/
 │   └── workflows/
-│       └── snapplai.yml    # GitHub Actions workflow (scheduled + manual)
+│       ├── snapplai.yml    # GitHub Actions workflow (scheduled + manual)
+│       ├── ci.yml          # CI pipeline — runs tests on push/PR
+│       └── yml.example     # Template for GitHub Actions workflow
 ├── Dockerfile              # Run anywhere with Docker
 ├── .env                    # API keys and SMTP credentials (git-ignored)
+├── .gitignore
 ├── example_env.txt         # Template for .env variables
 ├── requirements.txt        # Dependencies
+├── CONTRIBUTING.md         # Contribution guidelines
+├── SUPPORT.md              # Support and contact info
 ├── LICENSE                 # MIT
 └── README.md
 ```
