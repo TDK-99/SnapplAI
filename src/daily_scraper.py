@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 def job_scraper():
-    load_dotenv("your_cv_config/file_config.env")
+    load_dotenv("your_cv_config/file_config.env", override=True)
     jobs = []
     for loc in os.getenv("location").split(","):
         jobs_df = scrape_jobs(
