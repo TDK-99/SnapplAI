@@ -11,8 +11,8 @@ from io import BytesIO
 from src.pydantic import JobSummary, JobScore
 from src.llm import generate_content_resilient
 
-load_dotenv(".env")
-load_dotenv("your_cv_config/file_config.env")
+load_dotenv(".env", override=True)
+load_dotenv("your_cv_config/file_config.env", override=True)
 client = genai.Client(api_key=os.getenv("LLM_GEMINI"))
 
 
@@ -29,7 +29,7 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     - if {row["location"]} is empty then search the city in{row["description"]}, and if you dont find nothing means is remote put one of os.getenv("city")
     """
     
-    load_dotenv(".env")
+    load_dotenv(".env", override=True)
 
 
     for index, row in jobs.iterrows():

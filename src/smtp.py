@@ -12,8 +12,8 @@ hour= datetime.now().strftime("%H")
 
 today= date.today()
 
-load_dotenv(".env")
-load_dotenv("your_cv_config/file_config.env")
+load_dotenv(".env", override=True)
+load_dotenv("your_cv_config/file_config.env", override=True)
 
 
 
