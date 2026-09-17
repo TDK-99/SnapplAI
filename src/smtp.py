@@ -50,7 +50,7 @@ def send_email(jobs,job_all,report):
         jobs_log,
         maintype="application",
         subtype="xlsx",
-        filename=f"jobs_filter_{today}_.xls"
+        filename=f"jobs_filter_{today}.xlsx"
     )
 
     msg.add_attachment(
