@@ -54,7 +54,6 @@ def send_email(jobs,job_all,report):
     html_body = f"""\
 <html>
   <body style="font-family: Arial, Helvetica, sans-serif; color:#222;">
-    <h2 style="margin-bottom:2px;">AI LinkedIn Job Results</h2>
     <p style="color:#777; margin-top:0;">{os.getenv("search_term")} &middot; {today}</p>
     {jobs_html}
   </body>
@@ -70,7 +69,7 @@ def send_email(jobs,job_all,report):
     smtp_password = os.getenv("SMTP_PASSWORD") or os.getenv("GMAIL_APP_PASSWORD")
 
     msg = EmailMessage()
-    msg["Subject"] = f"AI Linkedin job - result of {os.getenv("search_term")} {today}--{hour}"
+    msg["Subject"] = f"SnapplAI - AI Linkedin job result of {os.getenv("search_term")} {today}--{hour}"
     msg["From"] = smtp_user
     msg["To"] = smtp_user
     msg.set_content(body)
