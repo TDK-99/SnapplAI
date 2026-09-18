@@ -6,6 +6,8 @@ search_term= "Data Analyst"
 
 location= "UK" #check the list #for multi country write like this "italy,UK"
 
+country_no= #countries to EXCLUDE from results (e.g. "United States,United Kingdom") - useful when location is empty (searching all countries) and you don't want some of them. Leave empty for no exclusion
+
 city= leave empty for no filter city - MIlan for one city - "Milan,Rome" for more than one city
 
 results_wanted= 20 # Max 100 results per run. For multiple countries, split evenly:
