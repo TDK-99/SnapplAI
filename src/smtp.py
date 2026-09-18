@@ -1,7 +1,6 @@
 import smtplib
 from email.message import EmailMessage
 import os
-import re
 import html
 from datetime import date,datetime
 from dotenv import load_dotenv
@@ -20,25 +19,44 @@ load_dotenv("your_cv_config/file_config.env", override=True)
 
 
 
+def _job_plain_block(job):
+    return (
+        f"{job['role']} - {job['company']} (score {job['score']}/10)\n"
+        f"{job['city']}, {job['location']} - {job['work_mode']}\n"
+        f"{job['a_summirize']}\n"
+        f"Apply: {job['apply_link']}\n"
+    )
+
+
+def _job_html_card(job):
+    return f"""\
+    <div style="border:1px solid #e1e4e8; border-radius:8px; padding:12px; margin-bottom:10px;">
+      <div style="font-weight:bold; font-size:15px;">{html.escape(str(job['role']))} &mdash; {html.escape(str(job['company']))}</div>
+      <div style="color:#777; font-size:13px; margin:4px 0;">{html.escape(str(job['city']))}, {html.escape(str(job['location']))} &middot; {html.escape(str(job['work_mode']))} &middot; score {job['score']}/10</div>
+      <div style="font-size:14px; margin-bottom:6px;">{html.escape(str(job['a_summirize']))}</div>
+      <a href="{job['apply_link']}" style="font-size:13px;">Apply &rarr;</a>
+    </div>
+"""
+
+
 def send_email(jobs,job_all,report):
 
-    body=f""" RESULT:
-    {jobs}
+    if isinstance(jobs, str):
+        body = f" RESULT:\n    {jobs}\n\n    "
+        jobs_html = f"<p>{html.escape(jobs)}</p>"
+    else:
+        body = "RESULT:\n\n" + "\n".join(_job_plain_block(job) for job in jobs)
+        jobs_html = "".join(_job_html_card(job) for job in jobs)
 
-    """
-
-    # Minimal HTML alternative: same plain-text result, just readable, with
-    # apply links clickable. Clients without HTML support fall back to `body`.
-    jobs_html = html.escape(jobs)
-    jobs_html = re.sub(r"(https?://\S+)", r'<a href="\1">\1</a>', jobs_html)
+    # Minimal HTML alternative: same result as one card per job, readable on
+    # mobile, with apply links clickable. Clients without HTML support fall
+    # back to the plain-text `body` above.
     html_body = f"""\
 <html>
   <body style="font-family: Arial, Helvetica, sans-serif; color:#222;">
     <h2 style="margin-bottom:2px;">AI LinkedIn Job Results</h2>
     <p style="color:#777; margin-top:0;">{os.getenv("search_term")} &middot; {today}</p>
-    <pre style="white-space:pre-wrap; background:#f6f8fa; border:1px solid #e1e4e8;
-                border-radius:6px; padding:14px; font-family:Consolas,monospace;
-                font-size:13px;">{jobs_html}</pre>
+    {jobs_html}
   </body>
 </html>
 """
