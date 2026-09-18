@@ -7,7 +7,7 @@ on:
     branches: [dev, main]
 
 jobs:
-  pydantic-validation:
+  pydantic:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
       - run: pip install pytest
       - run: python -m pytest tests/test_pydantic.py -v
 
-  ai-summarize-validation:
+  ai-summarize:
     runs-on: ubuntu-latest
     environment: snapplai
     env:
@@ -32,7 +32,7 @@ jobs:
       - run: pip install pytest
       - run: python -m pytest tests/test_ai_summarize.py -v
 
-  ai-analyze-validation:
+  ai-analyze:
     runs-on: ubuntu-latest
     environment: snapplai
     env:
@@ -46,7 +46,7 @@ jobs:
       - run: pip install pytest
       - run: python -m pytest tests/test_ai_analyze.py -v
 
-  smtp-validation:
+  smtp:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
         - run: pip install pytest
         - run: python -m pytest tests/test_smtp.py -v
 
-  job_scraper-validation:
+  job_scraper:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
