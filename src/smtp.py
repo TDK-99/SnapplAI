@@ -1,6 +1,8 @@
 import smtplib
 from email.message import EmailMessage
 import os
+import re
+import html
 from datetime import date,datetime
 from dotenv import load_dotenv
 import pandas as pd
@@ -25,6 +27,22 @@ def send_email(jobs,job_all,report):
 
     """
 
+    # Minimal HTML alternative: same plain-text result, just readable, with
+    # apply links clickable. Clients without HTML support fall back to `body`.
+    jobs_html = html.escape(jobs)
+    jobs_html = re.sub(r"(https?://\S+)", r'<a href="\1">\1</a>', jobs_html)
+    html_body = f"""\
+<html>
+  <body style="font-family: Arial, Helvetica, sans-serif; color:#222;">
+    <h2 style="margin-bottom:2px;">AI LinkedIn Job Results</h2>
+    <p style="color:#777; margin-top:0;">{os.getenv("search_term")} &middot; {today}</p>
+    <pre style="white-space:pre-wrap; background:#f6f8fa; border:1px solid #e1e4e8;
+                border-radius:6px; padding:14px; font-family:Consolas,monospace;
+                font-size:13px;">{jobs_html}</pre>
+  </body>
+</html>
+"""
+
     # SMTP config is provider-agnostic: host/port/credentials come from env.
     # Defaults keep Gmail working out of the box, and the GMAIL_* vars are still
     # honored as a fallback so existing setups don't break.
@@ -38,7 +56,8 @@ def send_email(jobs,job_all,report):
     msg["From"] = smtp_user
     msg["To"] = smtp_user
     msg.set_content(body)
-    
+    msg.add_alternative(html_body, subtype="html")
+
     buffer_excel = BytesIO()
 
     with pd.ExcelWriter(buffer_excel, engine='openpyxl') as writer:
