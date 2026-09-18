@@ -69,7 +69,7 @@ def send_email(jobs,job_all,report):
     smtp_password = os.getenv("SMTP_PASSWORD") or os.getenv("GMAIL_APP_PASSWORD")
 
     msg = EmailMessage()
-    msg["Subject"] = f"SnapplAI - AI Linkedin job result of {os.getenv("search_term")} {today}--{hour}"
+    msg["Subject"] = f"SnapplAI - {os.getenv("search_term")} {today}--{hour}"
     msg["From"] = smtp_user
     msg["To"] = smtp_user
     msg.set_content(body)
