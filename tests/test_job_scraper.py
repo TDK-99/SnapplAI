@@ -8,8 +8,9 @@ def fake_job_df():
     return pd.DataFrame([{"id": "1", "title": "Data Analyst", "location": "Rome"}])
 
 
+@patch("src.daily_scraper.load_dotenv")  # don't let the real committed file_config.env override monkeypatch
 @patch("src.daily_scraper.scrape_jobs")
-def test_multiple_locations_are_scraped_and_concatenated(mock_scrape_jobs, fake_job_df, monkeypatch):
+def test_multiple_locations_are_scraped_and_concatenated(mock_scrape_jobs, mock_load_dotenv, fake_job_df, monkeypatch):
     # Comma-separated locations with stray whitespace that job_scraper must strip,
     # plus the numeric/boolean env var conversions it has to do before calling jobspy.
     monkeypatch.setenv("location", "Italy, Spain")
