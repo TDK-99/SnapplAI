@@ -138,6 +138,7 @@ SnapplAI/
 │   └── pydantic.py         # pydantic class for force ai output
 ├── tests/
 │   ├── test_ai_analyze.py  # Unit test for AI analysis agent
+│   ├── test_job_scraper.py # Unit test for the LinkedIn scraper
 │   ├── test_ai_summarize.py # Unit test for AI summarize agent
 │   ├── test_pydantic.py    # Unit test for pydantic validation
 │   └── test_smtp.py        # Unit test for SMTP email sending
@@ -159,6 +160,7 @@ SnapplAI/
 ├── requirements.txt        # Dependencies
 ├── CONTRIBUTING.md         # Contribution guidelines
 ├── SUPPORT.md              # Support and contact info
+├── CLAUDE.md               # Repo workflow standards for Claude Code
 ├── LICENSE                 # MIT
 └── README.md
 ```
