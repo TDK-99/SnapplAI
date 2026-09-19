@@ -20,10 +20,4 @@ def job_scraper():
 
     jobs = pd.concat(jobs, ignore_index=True)
 
-    if os.getenv("country_no"):
-        # jobspy only gives a combined "City, Region, Country" string, no clean
-        # country field, so exclusion is a case-insensitive substring match.
-        for country in os.getenv("country_no").split(","):
-            jobs = jobs[~jobs["location"].str.contains(country.strip(), case=False, na=False)]
-
     return jobs
