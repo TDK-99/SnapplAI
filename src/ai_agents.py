@@ -66,10 +66,11 @@ def agentic_summarize(jobs): # summirize the description and create an output of
         lines = ["=== Job Search Analytics ===\n"]
 
         lines.append("🔎 Jobs:")
-        lines.append(df["id"].value_counts().to_string())
-        
 
-        lines.append("📍 Cities:")
+        counts = df["id"].count()
+        lines.append(f"\n📊Count job: {counts}")
+        
+        lines.append("\n📍 Cities:")
         lines.append(df["city"].value_counts().to_string())
 
         avg_exp = df["experience_years_min"].mean()
@@ -164,6 +165,8 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
 
     # filter df with env score
+
+
     
 
     if "score" not in jobs_score.columns:
