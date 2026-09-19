@@ -171,13 +171,20 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     else:
         if not os.getenv("city"):
             jobs_score
+            if os.getenv("country_no"):
+                        for country in os.getenv("country_no").split(","):
+                            jobs_score = jobs_score[~jobs_score["location"].str.contains(country.strip(), case=False, na=False)]
             job_all= jobs_score
         else:
             city =os.getenv("city").split(",")
             jobs_score= jobs_score[jobs_score["city"].isin(city) | (jobs_score["city"] == "Remote - Unspecified")]
+            if os.getenv("country_no"):
+                        for country in os.getenv("country_no").split(","):
+                            jobs_score = jobs_score[~jobs_score["location"].str.contains(country.strip(), case=False, na=False)]
             job_all= jobs_score
         jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
         jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
+        
         count_id =jobs_score["role"].count()
         jobs_score = jobs_score.to_dict(orient="records")
 
