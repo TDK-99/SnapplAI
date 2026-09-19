@@ -97,7 +97,7 @@ Two attachments complete the report: a filtered Excel with all scraped jobs, and
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey)
 2. Generate an app password for your email (e.g. [Gmail App Password](https://myaccount.google.com/apppasswords)). For non-Gmail providers, set `SMTP_HOST`/`SMTP_PORT` in `.env` — e.g. Outlook/Office365 uses `smtp.office365.com` on port `587` (STARTTLS); Gmail defaults to `smtp.gmail.com` on `465` (SSL).
 3. Place your CV (PDF) in `your_cv_config/`
-4. Configure search settings: use `file_config.txt` to create your `file_config.env` ([filter docs](https://github.com/Bunsly/JobSpy))
+4. Configure search settings: config your `file_config.env`
 5. Create your `.env` from the template: `cp example_env.txt .env`
 ### Deploy
  
@@ -120,9 +120,9 @@ docker run --env-file .env snapplai
 #### GitHub Actions
 1. Fork this repo (or [create a private copy](#private-copy))
 2. Complete setup steps 1-4 above in your fork
-3. Edit your settings in `.github/workflows/snapplai.yml` under the `env:` block
+3. Delete the # on schedule and -cron for action auto start
 4. Add credentials as **repository secrets** (Settings → Secrets → Actions): `GOOGLE_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`
-5. **Actions** tab → enable workflows → **Run workflow**
+5. **Actions** tab → enable workflows → **Run workflow** (for manual)
 
 --- 
 ## 📁 Project Structure
