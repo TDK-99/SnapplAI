@@ -21,11 +21,13 @@ env:
 
   search_term: "Data Analyst" #role
 
-  location: "Italy" #check the list on file_config.txt #for multi country write like this "italy,UK"
+  location: "Italy,Spain,Denmark,United States" #check the list on file_config.txt #for multi country write like this "italy,UK"
 
-  city: "Copenaghen,Bern,Aarhus,Zurich,Rome"      # leave empty for no filter city - Milan for one city - "Milan,Rome" for more than one city
+  country_no: "Italy,United States" #countries to EXCLUDE from results (e.g. "United States,United Kingdom") - useful when location is empty (searching all countries) and you don't want some of them. Leave empty for no exclusion
+
+  city:       # leave empty for no filter city - Milan for one city - "Milan,Rome" for more than one city
   
-  results_wanted: "10" # Max 100 results per run. For multiple countries, split evenly:
+  results_wanted: "17" # Max 100 results per run. For multiple countries, split evenly:
                        # e.g. 3 countries → ~33 each (100 / 3)
                        # if you put one and more city put min 50
 

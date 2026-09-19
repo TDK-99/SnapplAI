@@ -26,16 +26,16 @@ def agentic_summarize(jobs): # summirize the description and create an output of
     Few IMPORTANT note:
     - for the role take from {row["title"]} 
     - for city take from  {row["location"]} always in english and only the city
-    - if {row["location"]} is empty then search the city in{row["description"]}, and if you dont find nothing means is remote put one of os.getenv("city")
+    - if {row["location"]} is empty then search the city in{row["description"]}, and if you dont find nothing it means the location isn't specified: put exactly "Remote - Unspecified" as the city, do not guess or invent a city
     """
-    
+
     load_dotenv(".env", override=True)
 
 
     for index, row in jobs.iterrows():
         response = generate_content_resilient(
             client,
-            contents=f"{row["location"]},{row["title"]}, {row["description"]}, {os.getenv("city")}",
+            contents=f"{row["location"]},{row["title"]}, {row["description"]}",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 temperature=0,
@@ -66,10 +66,11 @@ def agentic_summarize(jobs): # summirize the description and create an output of
         lines = ["=== Job Search Analytics ===\n"]
 
         lines.append("🔎 Jobs:")
-        lines.append(df["id"].value_counts().to_string())
-        
 
-        lines.append("📍 Cities:")
+        counts = df["id"].count()
+        lines.append(f"\n📊Count job: {counts}")
+        
+        lines.append("\n📍 Cities:")
         lines.append(df["city"].value_counts().to_string())
 
         avg_exp = df["experience_years_min"].mean()
@@ -143,7 +144,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     for index, row in jobs.iterrows():
         response = generate_content_resilient(
             client,
-            contents=f"""{row["title"]},{row["city"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
+            contents=f"""{row["title"]},{row["location"]},{row["city"]},{row["company"]}, {row["seniority"]}, {row["modality"]}, {row["experience_years_min"]},
                         {row["required_skills"]}, {row["nice_to_have_skills"]}, {row["required_education"]}, {row["languages"]},{row["job_url"]}""",
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
@@ -164,6 +165,8 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
 
 
     # filter df with env score
+
+
     
 
     if "score" not in jobs_score.columns:
@@ -171,17 +174,22 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
     else:
         if not os.getenv("city"):
             jobs_score
+            if os.getenv("country_no"):
+                        for country in os.getenv("country_no").split(","):
+                            jobs_score = jobs_score[~jobs_score["location"].str.contains(country.strip(), case=False, na=False)]
             job_all= jobs_score
         else:
             city =os.getenv("city").split(",")
-            jobs_score= jobs_score[jobs_score["city"].isin(city)]
+            jobs_score= jobs_score[jobs_score["city"].isin(city) | (jobs_score["city"] == "Remote - Unspecified")]
+            if os.getenv("country_no"):
+                        for country in os.getenv("country_no").split(","):
+                            jobs_score = jobs_score[~jobs_score["location"].str.contains(country.strip(), case=False, na=False)]
             job_all= jobs_score
         jobs_score = jobs_score[jobs_score["score"]>=int(os.getenv("score_config"))]
         jobs_score = jobs_score[["score", "location", "city", "company", "role", "work_mode", "a_summirize", "apply_link"]]
+        
         count_id =jobs_score["role"].count()
         jobs_score = jobs_score.to_dict(orient="records")
-        jobs_score = json.dumps(jobs_score, indent=1)
-        jobs_score = jobs_score.replace("'", "").replace("[", "").replace("]", "").replace("{", "").replace("},", "       ").replace('"', '').replace(',', '').replace('}\n', '')
 
         
     return jobs_score, job_all,count_id
