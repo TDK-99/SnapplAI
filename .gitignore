@@ -230,5 +230,5 @@ note_release.txt
 
 your_cv_config/*
 !your_cv_config/.gitkeep
-!your_cv_config/file_config.txt
+!your_cv_config/file_config.env
 !your_cv_config/Valerio_Mezzopra_CV.pdf
