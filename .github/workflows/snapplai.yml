@@ -1,48 +1,18 @@
 # ============================================================
 # SnapplAI — Automated Job Alerts
 # ============================================================
-# Fork this repo, add your secrets, edit your settings below,
-# then enable Actions in your fork. Done.
+# Fork this repo, add your secrets, edit your search settings in
+# your_cv_config/file_config.env, then enable Actions in your fork. Done.
 # ============================================================
 
 name: SnapplAI — Job Alerts
 
 # --- WHEN does it run? ---
-on: #action disable remove # from schedule and cron for activate
-  #schedule: 
+on:
+  # schedule:
   #   - cron: "0 9-18/3 * * *" # Every 3 hours: 09:00, 12:00, 15:00, 18:00 UTC
   workflow_dispatch:
            # Manual run from Actions tab
-
-# --- USER SETTINGS (edit these after forking) ---
-env:
- 
-  site_name: "linkedin" #dont modify this
-
-  search_term: "Data Analyst" #role
-
-  location: "Italy,Spain,Denmark,United States" #check the list on file_config.txt #for multi country write like this "italy,UK"
-
-  country_no: "Italy,United States" #countries to EXCLUDE from results (e.g. "United States,United Kingdom") - useful when location is empty (searching all countries) and you don't want some of them. Leave empty for no exclusion
-
-  city:       # leave empty for no filter city - Milan for one city - "Milan,Rome" for more than one city
-  
-  results_wanted: "17" # Max 100 results per run. For multiple countries, split evenly:
-                       # e.g. 3 countries → ~33 each (100 / 3)
-                       # if you put one and more city put min 50
-
-  hours_old: "24" # when it post
-
-  linkedin_fetch_description: "True" # this should be always true
-
-  work_from_home: "True" # leave empty if you are interest also on site work
-
-  remote_only: "" #if you consider to work full remote insert True ,if not leave empty
-
-  dir_cv: "./your_cv_config/Valerio_Mezzopra_CV.pdf" #modifify after config\
-
-  score_config: "7" #this is the filter for the ai score, so the data ll filter for your number and up suggest 7 for 7-8-9-10 fit cv/JD
-
 
 jobs:
   run-snapplai:
@@ -50,7 +20,9 @@ jobs:
     environment: snapplai
 
     steps:
-      # 1. Get the code
+      # 1. Get the code (this also fetches your_cv_config/file_config.env,
+      #    which main.py loads automatically - edit your search settings
+      #    there, not in this file)
       - name: Checkout repo
         uses: actions/checkout@v4
 
