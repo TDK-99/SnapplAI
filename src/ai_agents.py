@@ -132,7 +132,7 @@ def agentic_analyze(jobs): # agentic ai that compare your cv with the output of 
                 2. **Seniority alignment** — does the candidate's experience level match what the role asks for?
                 3. **Domain relevance** — is the candidate's industry/domain experience relevant?
                 4. **Title alignment** — how close is the candidate's current/past titles to this role?
-                5. **Location/remote fit** — can the candidate realistically work this role?
+                5. **Location/remote fit** — remote roles always fit. On-site/hybrid roles fit only if in the candidate's city or {os.getenv("relocation")} is True
 
                 ## Scoring rubric
                 - 1-3: Poor fit — major gaps in required skills or seniority mismatch, Overqualified (e.g. 2+ yrs for stage/internship)? Max 3.
