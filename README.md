@@ -139,6 +139,7 @@ SnapplAI/
 ├── tests/
 │   ├── test_ai_analyze.py  # Unit test for AI analysis agent
 │   ├── test_job_scraper.py # Unit test for the LinkedIn scraper
+│   ├── test_generate_resilient.py # Unit test for resilian llm api
 │   ├── test_ai_summarize.py # Unit test for AI summarize agent
 │   ├── test_pydantic.py    # Unit test for pydantic validation
 │   └── test_smtp.py        # Unit test for SMTP email sending
